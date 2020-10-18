@@ -91,6 +91,9 @@ def main():
             print("Inicializando thread cmd Tello...")
             tello_thread.setDaemon()
             tello_thread.start()
+            print("Inicializando stream de la central...")
+            central_stream_thread.setDaemon()
+            central_stream_thread.start()
             break
         sleep(1) 
     while True:
