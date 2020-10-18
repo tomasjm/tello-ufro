@@ -1,0 +1,5 @@
+takeoff
+delay 5
+land
+delay 10
+streamoff
