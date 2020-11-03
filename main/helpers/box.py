@@ -1,4 +1,5 @@
 import requests
+from time import sleep
 
 '''
 Función que recibe tres parametros, la dirección ip de la estación, el estado del foco y el estado de la cámara.

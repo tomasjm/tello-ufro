@@ -2,7 +2,7 @@ import socket
 import threading
 import time
 import numpy as np
-from stats import Stats
+from .stats import Stats
 class Tello:
     """Wrapper class to interact with the Tello drone."""
 
@@ -54,7 +54,7 @@ class Tello:
         """Closes the local socket."""
 
         self.socket.close()
-        self.socket_video.close()
+        #self.socket_video.close()
 
     def read(self):
         """Return the last frame from camera."""
@@ -76,10 +76,10 @@ class Tello:
         while True:
             try:
                 self.response, ip = self.socket.recvfrom(1024)
-                print('from %s: %s' % (ip, self.response))
+                print(('from %s: %s' % (ip, self.response)))
                 self.log[-1].add_response(self.response)
             except (socket.error, exc):
-                print ("Caught exception socket.error : "+ str(exc) ) 
+                print(("Caught exception socket.error : "+ str(exc) )) 
 
 
     def send_command(self, command):
@@ -95,18 +95,18 @@ class Tello:
         self.log.append(Stats(command, len(self.log)))
 
         self.socket.sendto(command.encode('utf-8'), self.tello_address)
-        print ('sending command: ' + str(command)+ ' to ' + str(self.tello_ip))
+        print(('sending command: ' + str(command)+ ' to ' + str(self.tello_ip)))
 
         start = time.time()
         while not self.log[-1].got_response():
             now = time.time()
             diff = now - start
             if diff > self.MAX_TIME_OUT:
-                print ('Max timeout exceeded... command '+ str(command))
+                print(('Max timeout exceeded... command '+ str(command)))
                 # TODO: is timeout considered failure or next command still get executed
                 # now, next one got executed
                 return
-        print ('Done!!! sent command: ' + str(command) + ' to ' + str(self.tello_ip))
+        print(('Done!!! sent command: ' + str(command) + ' to ' + str(self.tello_ip)))
 
     def set_abort_flag(self):
         """
@@ -222,7 +222,7 @@ class Tello:
         """
         height = self.send_command('height?')
         height = str(height)
-        height = filter(str.isdigit, height)
+        height = list(filter(str.isdigit, height))
         try:
             height = int(height)
             self.last_height = height

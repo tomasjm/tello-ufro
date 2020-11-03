@@ -14,7 +14,7 @@ def Login(url, email, clave):
     print("--------------------------------")
     print("Realizando petición de ingreso...")
     r = requests.post(url, json=obj)
-    print("Respuesta: " + r)
+    print(("Respuesta: " + r))
     response = r.json()
     token = response['token']
     if token:

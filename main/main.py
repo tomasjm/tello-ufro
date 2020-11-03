@@ -6,12 +6,14 @@ import requests
 from time import sleep
 import threading
 import os
+import gpiozero as gpio
 
 # Imports locales de funciones útiles (helpers)
 import helpers.tello as tello
 from helpers.streams import Send_Central_Stream, Send_Tello_Stream
 from helpers.box import Control_Box
 from helpers.login import Login
+
 
 
 # variables globales
@@ -60,6 +62,7 @@ def init_tello():
                 pass
             else:
                 if (command == 'streamoff'):
+                    global tello_is_streaming
                     tello_is_streaming = False
                 drone.send_command(command)
 
@@ -78,35 +81,30 @@ tello_thread = threading.Thread(target=init_tello, name='Tello cmd thread') # Fu
 
 # Función general de inicialización
 def main():
+    global tello_is_streaming
+    global button_status
     token = Login(login_data['server_url'],login_data['email'], login_data['clave'])
     if token == '':
         print("No se pudo obtener el token")
         return
-    bl_thread.setDaemon()
     bl_thread.start()
     while True:
-        global button_status
         print("Comprobando estado de la central...")
         if button_status:
             print("Inicializando thread cmd Tello...")
-            tello_thread.setDaemon()
             tello_thread.start()
             print("Inicializando stream de la central...")
-            central_stream_thread.setDaemon()
             central_stream_thread.start()
             break
         sleep(1) 
     while True:
-        global tello_is_streaming
         print("Comprobando estado del streaming de Tello...")
         if tello_is_streaming:
             print("Inicializando thread stream Tello...")
-            tello_stream_thread.setDaemon()
             tello_stream_thread.start()
             break
         sleep(1)
     while True:
-        global tello_is_streaming
         if not tello_is_streaming:
             sleep(5)
             print("Enviando sudo pkill ffmpeg para terminar los streams")

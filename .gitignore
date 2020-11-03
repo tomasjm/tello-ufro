@@ -1,7 +1,8 @@
 *.pyc
 log/
 node_test/node_modules
-
+env/
+.vscode
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
