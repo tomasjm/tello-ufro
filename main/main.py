@@ -74,8 +74,8 @@ def init_tello():
         out.write(strr)
 
 # Inicialización de threads utilizados
-tello_stream_thread = threading.Thread(target=Send_Tello_Stream) # Stream del drone
-central_stream_thread = threading.Thread(target=Send_Central_Stream) # Stream de la central
+tello_stream_thread = threading.Thread(target=Send_Tello_Stream(server_ip, token)) # Stream del drone
+central_stream_thread = threading.Thread(target=Send_Central_Stream(server_ip, token)) # Stream de la central
 bl_thread = threading.Thread(target=Control_loop, name='Button Loop') # Estado del botón de la central
 tello_thread = threading.Thread(target=init_tello, name='Tello cmd thread') # Función que está encargada del control del vehiculo
 
