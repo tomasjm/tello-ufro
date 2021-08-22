@@ -18,7 +18,7 @@ from helpers.login import Login
 
 # variables globales
 node_ip = '192.168.8.150'
-server_ip = "190.114.255.51"
+server_ip = "207.246.76.251"
 token = ''
 button_status = False
 tello_is_streaming = False
@@ -26,7 +26,7 @@ tello_is_streaming = False
 # objetos globales
 login_data = {
     "server_url": 'http://' + server_ip + ':3976/api/usuario/login',
-    "email": "j.martinez09@ufromail.cl",
+    "email": "t.jimenez03@ufromail.cl",
     "clave": "123456"
 }
 
